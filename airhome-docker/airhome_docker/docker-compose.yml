@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  # ML Module
+  ml_module:
+    build: ./ml_module
+    container_name: airhome_ml
+    ports:
+      - "5002:5002"
+    networks:
+      - airhome-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5002/ml/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Backend API
+  backend:
+    build: ./backend
+    container_name: airhome_backend
+    ports:
+      - "5001:5001"
+    depends_on:
+      - ml_module
+    networks:
+      - airhome-network
+    environment:
+      - ML_SERVICE_URL=http://ml_module:5002
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5001/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Frontend
+  frontend:
+    build: ./frontend
+    container_name: airhome_frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    networks:
+      - airhome-network
+
+  # Admin UI Dashboard
+  ui:
+    build: ./ui
+    container_name: airhome_ui
+    ports:
+      - "8081:80"
+    depends_on:
+      - backend
+      - ml_module
+    networks:
+      - airhome-network
+
+networks:
+  airhome-network:
+    driver: bridge
+
+volumes:
+  ml_models:

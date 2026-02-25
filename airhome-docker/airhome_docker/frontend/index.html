@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AirHome - Property Investment Platform</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏠 AirHome Investment Platform</h1>
+            <p>AI-Powered Property & Airbnb Price Prediction</p>
+        </header>
+
+        <main>
+            <section class="prediction-form">
+                <h2>Property Details</h2>
+                <form id="propertyForm">
+                    <div class="form-group">
+                        <label>Bedrooms:</label>
+                        <input type="number" id="bedrooms" value="2" min="1" max="10">
+                    </div>
+                    <div class="form-group">
+                        <label>Bathrooms:</label>
+                        <input type="number" id="bathrooms" value="2" min="1" max="10">
+                    </div>
+                    <div class="form-group">
+                        <label>Area (sq ft):</label>
+                        <input type="number" id="area" value="1000" min="100" max="10000">
+                    </div>
+                    <div class="form-group">
+                        <label>Location Score (1-10):</label>
+                        <input type="number" id="location_score" value="7" min="1" max="10">
+                    </div>
+                    <button type="submit">Get Prediction</button>
+                </form>
+            </section>
+
+            <section class="results" id="results" style="display:none;">
+                <h2>Prediction Results</h2>
+                <div class="result-card">
+                    <h3>Predicted Price</h3>
+                    <p id="predicted_price" class="big-number">₹0</p>
+                </div>
+                <div class="result-card">
+                    <h3>Occupancy Rate</h3>
+                    <p id="predicted_occupancy" class="big-number">0%</p>
+                </div>
+                <div class="result-card">
+                    <h3>ROI Estimate</h3>
+                    <p id="roi_estimate" class="big-number">0%</p>
+                </div>
+            </section>
+
+            <section class="properties">
+                <h2>Featured Properties</h2>
+                <div id="propertyList"></div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
